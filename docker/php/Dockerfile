@@ -1,6 +1,6 @@
 FROM php:8.1.1-fpm-alpine
 
-RUN apk update && apk add --no-cache git libzip-dev npm wget curl bash
+RUN apk update && apk add --no-cache git libzip-dev npm wget curl bash openssh
 RUN docker-php-ext-install zip mysqli pdo pdo_mysql
 RUN npm install -g yarn
 

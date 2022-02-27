@@ -6,7 +6,16 @@ executors:
       image: ubuntu-2004:current
 
 jobs:
-  docker:dev:
+  docker-dev:
+    executor: linux-executor
+    steps:
+      - checkout
+      - run:
+          name: Build image
+          command: |
+            docker ls
+
+  docker-latest:
     executor: linux-executor
     steps:
       - checkout
@@ -24,8 +33,8 @@ workflows:
           filters:
             branches:
               only: [ dev ]
-      - docker-prod:
-          name: docker:prod
+      - docker-latest:
+          name: docker:latest
           type: approval
           context: docker-hub
           filters:

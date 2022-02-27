@@ -11,21 +11,37 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Build image
-          command: |
-            docker ls
+          name: Login on docker
+          command: docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN
+      - run:
+          name: Build php image
+          command: docker build -t $DOCKER_USERNAME/$DOCKER_REPOSITORY ./docker/php
+      - run:
+          name: Docker tag php image
+          command: docker tag $DOCKER_USERNAME/$DOCKER_REPOSITORY $DOCKER_USERNAME/$DOCKER_REPOSITORY:dev
+      - run:
+          name: Build push
+          command: docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY:dev
 
   docker-latest:
     executor: linux-executor
     steps:
       - checkout
       - run:
-          name: Build image
-          command: |
-            docker ls
+          name: Login on docker
+          command: docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN
+      - run:
+          name: Build php image
+          command: docker build -t $DOCKER_USERNAME/$DOCKER_REPOSITORY ./docker/php
+      - run:
+          name: Docker tag php image
+          command: docker tag $DOCKER_USERNAME/$DOCKER_REPOSITORY $DOCKER_USERNAME/$DOCKER_REPOSITORY:latest
+      - run:
+          name: Build push
+          command: docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY:latest
 
 workflows:
-  CI-CD:
+  docker:
     jobs:
       - docker-dev:
           name: docker:dev

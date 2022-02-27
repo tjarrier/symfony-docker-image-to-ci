@@ -1,0 +1,33 @@
+version: 2.1
+
+executors:
+  linux-executor:
+    machine:
+      image: ubuntu-2004:current
+
+jobs:
+  docker:dev:
+    executor: linux-executor
+    steps:
+      - checkout
+      - run:
+          name: Build image
+          command: |
+            docker ls
+
+workflows:
+  CI-CD:
+    jobs:
+      - docker-dev:
+          name: docker:dev
+          context: docker-hub
+          filters:
+            branches:
+              only: [ dev ]
+      - docker-prod:
+          name: docker:prod
+          type: approval
+          context: docker-hub
+          filters:
+            branches:
+              only: [ master ]

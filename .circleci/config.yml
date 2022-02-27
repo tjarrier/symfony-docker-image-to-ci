@@ -49,14 +49,17 @@ workflows:
           filters:
             branches:
               only: [ dev ]
-      - docker-latest-approvable:
+      - docker-latest-approval:
           type: approval
-          name: docker:latest:approvable
+          name: docker:latest:approval
+          filters:
+            branches:
+              only: [ master ]
       - docker-latest:
           name: docker:latest
           context: docker-hub
           requires:
-            - docker:latest:approvable
+            - docker:latest:approval
           filters:
             branches:
               only: [ master ]

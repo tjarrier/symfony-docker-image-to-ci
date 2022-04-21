@@ -9,5 +9,3 @@ RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && mv com
 
 # Symfony CLI
 RUN wget https://get.symfony.com/cli/installer -O - | bash && mv /root/.symfony/bin/symfony /usr/local/bin/symfony
-
-RUN mv /etc/localtime /etc/locatime-old && ln -s /usr/share/zoneinfo/Europe/Paris /etc/localtime

@@ -53,13 +53,17 @@ workflows:
           type: approval
           name: docker:latest:approval
           filters:
+            tags:
+              only: /^v.*/
             branches:
-              only: [ master ]
+              ignore: /.*/
       - docker-latest:
           name: docker:latest
           context: docker-hub
           requires:
             - docker:latest:approval
           filters:
+            tags:
+              only: /^v.*/
             branches:
-              only: [ master ]
+              ignore: /.*/

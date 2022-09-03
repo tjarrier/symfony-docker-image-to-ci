@@ -5,7 +5,7 @@ RUN docker-php-ext-install zip mysqli pdo pdo_mysql pdo_pgsql xsl
 RUN npm install -g yarn
 
 # Redis
-RUN pecl install redis && docker-php-ext-enable redis
+RUN pecl install -f redis && docker-php-ext-enable redis
 
 # Composer
 RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && mv composer.phar /usr/local/bin/composer

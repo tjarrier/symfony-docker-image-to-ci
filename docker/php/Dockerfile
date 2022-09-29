@@ -8,4 +8,9 @@ RUN npm install -g yarn
 RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && mv composer.phar /usr/local/bin/composer
 
 # Symfony CLI
-RUN wget https://get.symfony.com/cli/installer -O - | bash && mv /root/.symfony/bin/symfony /usr/local/bin/symfony
+RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.alpine.sh' | bash && apk add symfony-cli
+
+# Redis
+RUN apk add --no-cache pcre-dev $PHPIZE_DEPS \
+        && pecl install redis \
+        && docker-php-ext-enable redis.so
